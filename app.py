@@ -1,4 +1,6 @@
 import streamlit as st
+import base64
+from pathlib import Path
 
 st.set_page_config(
     page_title="VigIA Goiás",
@@ -6,6 +8,26 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+# =========================================================
+# FUNÇÃO PARA CARREGAR IMAGENS DO REPOSITÓRIO
+# =========================================================
+
+def img_b64(path):
+    arquivo = Path(path)
+
+    if not arquivo.exists():
+        return ""
+
+    return base64.b64encode(
+        arquivo.read_bytes()
+    ).decode()
+
+
+logo = img_b64("assets/Logo Vigia Goias.png")
+natureza = img_b64("assets/Foto Natureza 1.jpg")
+cidade = img_b64("assets/Foto Cidade Goiania.jpg")
+
 
 # =========================================================
 # CSS
@@ -46,24 +68,52 @@ header {
     background: transparent !important;
 }
 
-/* NAVBAR */
+/* =========================
+   NAVBAR
+========================= */
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0 1.2rem 0;
-    border-bottom: 1px solid rgba(72,255,140,.12);
+
+    padding: .8rem 0 1rem 0;
+
+    border-bottom:
+        1px solid rgba(72,255,140,.12);
 }
 
-.brand {
+.brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-img {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+
+    filter:
+        drop-shadow(0 0 16px rgba(65,255,140,.15));
+}
+
+.brand-name {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.45rem;
     font-weight: 800;
 }
 
-.brand span {
+.brand-name span {
     color: #45f58a;
+}
+
+.brand-sub {
+    margin-top: 2px;
+
+    color: #789084;
+
+    font-size: .69rem;
 }
 
 .nav-links {
@@ -71,127 +121,193 @@ header {
     font-size: .9rem;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero {
     position: relative;
     overflow: hidden;
+
     margin-top: 1rem;
+
     padding: 5rem 3.7rem;
+
     min-height: 470px;
+
     border-radius: 30px;
-    border: 1px solid rgba(74,255,142,.18);
+
+    border:
+        1px solid rgba(74,255,142,.18);
 
     background:
-        radial-gradient(circle at 79% 44%, rgba(36,255,127,.18), transparent 20%),
-        radial-gradient(circle at 88% 55%, rgba(0,130,255,.08), transparent 17%),
-        linear-gradient(115deg, rgba(3,15,10,.98), rgba(2,9,7,.84));
+        radial-gradient(
+            circle at 79% 44%,
+            rgba(36,255,127,.18),
+            transparent 20%
+        ),
+        linear-gradient(
+            115deg,
+            rgba(3,15,10,.98),
+            rgba(2,9,7,.84)
+        );
 
     box-shadow:
-        0 25px 80px rgba(0,0,0,.40),
-        inset 0 1px 0 rgba(255,255,255,.02);
+        0 25px 80px rgba(0,0,0,.40);
 }
 
 .hero::before {
     content: "";
+
     position: absolute;
+
     right: 7%;
     top: 7%;
+
     width: 420px;
     height: 420px;
+
     border-radius: 50%;
-    border: 1px solid rgba(65,255,139,.32);
+
+    border:
+        1px solid rgba(65,255,139,.30);
+
     box-shadow:
-        0 0 70px rgba(50,255,140,.13),
-        inset 0 0 80px rgba(50,255,140,.05);
+        0 0 70px rgba(50,255,140,.12);
 }
 
 .hero::after {
     content: "";
+
     position: absolute;
+
     right: 13%;
     top: 17%;
+
     width: 285px;
     height: 285px;
+
     border-radius: 50%;
-    border: 1px dashed rgba(70,255,140,.22);
+
+    border:
+        1px dashed rgba(70,255,140,.20);
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
+
     max-width: 720px;
 }
 
 .eyebrow {
     color: #48f58e;
+
     font-size: .77rem;
+
     font-weight: 800;
+
     letter-spacing: .17em;
+
     margin-bottom: 1.1rem;
 }
 
 .hero h1 {
     margin: 0;
+
     color: white;
+
     font-size: 4.3rem;
+
     line-height: 1.03;
+
     letter-spacing: -0.055em;
+
     font-weight: 800;
 }
 
 .hero h1 span {
     color: #55f58a;
-    text-shadow: 0 0 30px rgba(60,255,140,.22);
+
+    text-shadow:
+        0 0 30px rgba(60,255,140,.22);
 }
 
 .hero p {
     max-width: 650px;
+
     margin-top: 1.6rem;
+
     color: #afc2b7;
+
     font-size: 1.07rem;
+
     line-height: 1.8;
 }
 
 .pills {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: .8rem;
+
     margin-top: 2rem;
 }
 
 .pill {
     padding: .72rem 1rem;
+
     border-radius: 999px;
-    border: 1px solid rgba(69,255,140,.24);
-    background: rgba(12,49,31,.28);
+
+    border:
+        1px solid rgba(69,255,140,.24);
+
+    background:
+        rgba(12,49,31,.28);
+
     color: #d0ffde;
+
     font-size: .84rem;
 }
 
-/* SEÇÕES */
+/* =========================
+   SEÇÕES
+========================= */
 
 .section-kicker {
     margin-top: 4rem;
+
     color: #45f58a;
+
     font-size: .76rem;
+
     font-weight: 800;
+
     letter-spacing: .15em;
 }
 
 .section-title {
     margin-top: .35rem;
+
     margin-bottom: 1.4rem;
+
     color: white;
+
     font-size: 2.3rem;
+
     font-weight: 800;
 }
 
-/* UPLOAD */
+/* =========================
+   UPLOAD
+========================= */
 
 .upload-info {
     min-height: 205px;
+
     padding: 1.7rem;
+
     border-radius: 22px;
 
     background:
@@ -201,8 +317,11 @@ header {
             rgba(4,18,12,.82)
         );
 
-    border: 1px solid rgba(75,255,143,.16);
-    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    border:
+        1px solid rgba(75,255,143,.16);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.25);
 }
 
 .upload-icon {
@@ -210,31 +329,41 @@ header {
     height: 52px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     margin-bottom: 1rem;
+
     border-radius: 15px;
 
-    background: rgba(55,255,132,.09);
-    border: 1px solid rgba(70,255,140,.24);
+    background:
+        rgba(55,255,132,.09);
+
+    border:
+        1px solid rgba(70,255,140,.24);
 
     font-size: 1.5rem;
 }
 
 .upload-info h3 {
     color: white;
+
     font-size: 1.5rem;
 }
 
 .upload-info p {
     color: #9fb3a8;
+
     line-height: 1.7;
 }
 
 div[data-testid="stFileUploader"] {
     min-height: 205px;
+
     display: flex;
+
     align-items: center;
 
     background:
@@ -244,11 +373,15 @@ div[data-testid="stFileUploader"] {
             rgba(3,15,10,.85)
         );
 
-    border: 1px dashed rgba(72,255,140,.38);
+    border:
+        1px dashed rgba(72,255,140,.38);
+
     border-radius: 22px;
+
     padding: 1.2rem;
 
-    box-shadow: 0 20px 60px rgba(0,0,0,.22);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.22);
 }
 
 div[data-testid="stFileUploader"] section {
@@ -256,49 +389,56 @@ div[data-testid="stFileUploader"] section {
 }
 
 div[data-testid="stFileUploader"] button {
-    background: linear-gradient(90deg, #08763e, #20d76e) !important;
+    background:
+        linear-gradient(
+            90deg,
+            #08763e,
+            #20d76e
+        ) !important;
+
     color: white !important;
+
     border: none !important;
+
     border-radius: 12px !important;
 }
 
-/* BOTÃO */
-
-div.stButton > button {
-    width: 100%;
-    padding: .9rem;
-    border-radius: 13px;
-    background: linear-gradient(90deg, #087a41, #22d96d);
-    color: white;
-    border: 1px solid rgba(88,255,151,.35);
-    font-weight: 800;
-}
-
-/* CARDS */
+/* =========================
+   CARDS
+========================= */
 
 .future-card {
     position: relative;
+
     overflow: hidden;
-    min-height: 285px;
+
+    min-height: 340px;
+
     padding: 1.7rem;
+
     border-radius: 22px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(8,29,20,.90),
-            rgba(3,15,10,.86)
-        );
+    border:
+        1px solid rgba(70,255,140,.22);
 
-    border: 1px solid rgba(70,255,140,.18);
-    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.30);
+
+    background-size: cover !important;
+
+    background-position: center !important;
 
     transition: .25s ease;
 }
 
 .future-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(70,255,140,.42);
+
+    border-color:
+        rgba(70,255,140,.48);
+
+    box-shadow:
+        0 28px 75px rgba(0,255,130,.10);
 }
 
 .card-icon {
@@ -306,53 +446,77 @@ div.stButton > button {
     height: 52px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     margin-bottom: 1rem;
 
     border-radius: 15px;
 
-    background: rgba(55,255,132,.09);
-    border: 1px solid rgba(70,255,140,.24);
+    background:
+        rgba(5,20,13,.72);
+
+    border:
+        1px solid rgba(70,255,140,.30);
+
+    backdrop-filter: blur(8px);
 
     font-size: 1.45rem;
 }
 
 .future-card h3 {
     color: white;
-    font-size: 1.3rem;
+
+    font-size: 1.32rem;
+
+    text-shadow:
+        0 3px 15px rgba(0,0,0,.85);
 }
 
 .future-card p {
-    color: #a2b5aa;
+    color: #ecfff4;
+
     margin: .58rem 0;
+
+    text-shadow:
+        0 2px 12px rgba(0,0,0,.95);
 }
 
 .check {
     color: #4df58d;
-    font-weight: 700;
+
+    font-weight: 800;
 }
 
 .status {
     display: inline-flex;
+
     margin-top: 1rem;
 
     padding: .45rem .75rem;
 
     border-radius: 999px;
 
-    background: rgba(255,193,7,.07);
-    border: 1px solid rgba(255,193,7,.18);
+    background:
+        rgba(10,20,13,.70);
+
+    border:
+        1px solid rgba(255,193,7,.35);
 
     color: #ffd96f;
+
     font-size: .8rem;
 }
 
-/* MISSÃO */
+/* =========================
+   MISSÃO
+========================= */
 
 .mission {
     margin-top: 2.3rem;
+
     padding: 1.6rem;
 
     border-radius: 20px;
@@ -364,9 +528,11 @@ div.stButton > button {
             rgba(5,25,17,.25)
         );
 
-    border: 1px solid rgba(72,255,140,.16);
+    border:
+        1px solid rgba(72,255,140,.16);
 
     color: #bfe9ce;
+
     text-align: center;
 }
 
@@ -374,31 +540,51 @@ div.stButton > button {
     color: #54f591;
 }
 
-/* FOOTER */
-
 .footer-custom {
     margin-top: 3rem;
+
     padding-top: 1.5rem;
 
-    border-top: 1px solid rgba(70,255,140,.08);
+    border-top:
+        1px solid rgba(70,255,140,.08);
 
     color: #647c70;
+
     text-align: center;
+
     font-size: .82rem;
 }
 
 </style>
 """)
 
+
 # =========================================================
-# NAVBAR
+# NAVBAR COM LOGO
 # =========================================================
 
-st.html("""
+st.html(f"""
 <div class="navbar">
 
-    <div class="brand">
-        ◉ Vig<span>IA</span> Goiás
+    <div class="brand-wrap">
+
+        <img
+            src="data:image/png;base64,{logo}"
+            class="logo-img"
+        >
+
+        <div>
+
+            <div class="brand-name">
+                Vig<span>IA</span> Goiás
+            </div>
+
+            <div class="brand-sub">
+                Inteligência Artificial • Vigilância Ambiental
+            </div>
+
+        </div>
+
     </div>
 
     <div class="nav-links">
@@ -409,6 +595,7 @@ st.html("""
 
 </div>
 """)
+
 
 # =========================================================
 # HERO
@@ -454,6 +641,7 @@ st.html("""
 
 </div>
 """)
+
 
 # =========================================================
 # UPLOAD
@@ -504,9 +692,6 @@ with col2:
         label_visibility="collapsed"
     )
 
-# =========================================================
-# IMAGEM
-# =========================================================
 
 if imagem is not None:
 
@@ -522,9 +707,10 @@ if imagem is not None:
     ):
 
         st.info(
-            "Os modelos de Inteligência Artificial serão "
-            "conectados após a conclusão do treinamento."
+            "Os modelos serão conectados à interface "
+            "após a conclusão do treinamento."
         )
+
 
 # =========================================================
 # MÓDULOS
@@ -545,11 +731,23 @@ c1, c2, c3 = st.columns(
     gap="large"
 )
 
+
 # CARD 1
 with c1:
 
-    st.html("""
-    <div class="future-card">
+    st.html(f"""
+    <div
+        class="future-card"
+        style="
+            background-image:
+            linear-gradient(
+                180deg,
+                rgba(1,12,8,.32),
+                rgba(1,12,8,.93)
+            ),
+            url('data:image/jpeg;base64,{cidade}');
+        "
+    >
 
         <div class="card-icon">
             ♻️
@@ -582,11 +780,23 @@ with c1:
     </div>
     """)
 
+
 # CARD 2
 with c2:
 
-    st.html("""
-    <div class="future-card">
+    st.html(f"""
+    <div
+        class="future-card"
+        style="
+            background-image:
+            linear-gradient(
+                180deg,
+                rgba(1,12,8,.22),
+                rgba(1,12,8,.92)
+            ),
+            url('data:image/jpeg;base64,{natureza}');
+        "
+    >
 
         <div class="card-icon">
             🌱
@@ -614,11 +824,23 @@ with c2:
     </div>
     """)
 
+
 # CARD 3
 with c3:
 
-    st.html("""
-    <div class="future-card">
+    st.html(f"""
+    <div
+        class="future-card"
+        style="
+            background-image:
+            linear-gradient(
+                180deg,
+                rgba(1,12,8,.25),
+                rgba(1,12,8,.93)
+            ),
+            url('data:image/jpeg;base64,{cidade}');
+        "
+    >
 
         <div class="card-icon">
             🏙️
@@ -641,6 +863,7 @@ with c3:
     </div>
     """)
 
+
 # =========================================================
 # MISSÃO
 # =========================================================
@@ -651,10 +874,12 @@ st.html("""
     <strong>VigIA Goiás</strong>
 
     — tecnologia, Inteligência Artificial e dados ambientais
-    para apoiar ambientes mais seguros, saudáveis e monitorados.
+    para apoiar ambientes mais seguros,
+    saudáveis e monitorados.
 
 </div>
 """)
+
 
 # =========================================================
 # FOOTER
