@@ -2,6 +2,10 @@ import streamlit as st
 import base64
 from pathlib import Path
 
+# =========================================================
+# CONFIGURAÇÃO
+# =========================================================
+
 st.set_page_config(
     page_title="VigIA Goiás",
     page_icon="🌿",
@@ -9,51 +13,54 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+
 # =========================================================
-# FUNÇÃO PARA CARREGAR IMAGENS DO REPOSITÓRIO
+# CARREGAR IMAGENS
 # =========================================================
 
-def img_b64(path):
-    arquivo = Path(path)
+def imagem_base64(caminho):
+    arquivo = Path(caminho)
 
     if not arquivo.exists():
         return ""
 
     return base64.b64encode(
         arquivo.read_bytes()
-    ).decode()
+    ).decode("utf-8")
 
 
-logo = img_b64("assets/Logo Vigia Goias.png")
-natureza = img_b64("assets/Foto Natureza 1.jpg")
-cidade = img_b64("assets/Foto Cidade Goiania.jpg")
+logo = imagem_base64("Logo Vigia Goias.png")
+foto_natureza = imagem_base64("Foto Natureza 1.jpg")
+foto_cidade = imagem_base64("Foto Cidade Goiania.jpg")
 
 
 # =========================================================
 # CSS
 # =========================================================
 
-st.html("""
+st.markdown("""
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 * {
-    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+}
+
+html, body, [class*="css"] {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .stApp {
     background:
-        radial-gradient(circle at 88% 8%, rgba(0,255,140,.12), transparent 25%),
-        radial-gradient(circle at 8% 90%, rgba(0,170,110,.08), transparent 27%),
-        linear-gradient(135deg, #010604 0%, #03100b 48%, #010706 100%);
+        radial-gradient(circle at 88% 5%, rgba(0, 255, 130, .11), transparent 24%),
+        radial-gradient(circle at 5% 90%, rgba(0, 180, 100, .08), transparent 25%),
+        #010806;
     color: white;
 }
 
 .block-container {
-    max-width: 1380px;
-    padding-top: 1rem;
-    padding-bottom: 3rem;
+    max-width: 1400px;
+    padding-top: 1.2rem;
+    padding-bottom: 4rem;
 }
 
 #MainMenu {
@@ -68,320 +75,343 @@ header {
     background: transparent !important;
 }
 
-/* =========================
+
+/* ========================================================
    NAVBAR
-========================= */
+======================================================== */
 
 .navbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
-    padding: .8rem 0 1rem 0;
+    padding: 5px 5px 18px 5px;
 
-    border-bottom:
-        1px solid rgba(72,255,140,.12);
+    border-bottom: 1px solid rgba(71, 255, 141, .13);
 }
 
-.brand-wrap {
+.brand {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 15px;
 }
 
-.logo-img {
-    width: 85px;
-    height: 85px;
+.logo {
+    width: 92px;
+    height: 92px;
+
     object-fit: contain;
 
+    border-radius: 18px;
+
     filter:
-        drop-shadow(0 0 16px rgba(65,255,140,.15));
+        drop-shadow(0 0 20px rgba(65, 255, 140, .15));
 }
 
-.brand-name {
-    color: white;
-    font-size: 1.45rem;
+.brand-title {
+    color: #ffffff;
+
+    font-size: 1.5rem;
     font-weight: 800;
+
+    letter-spacing: -.03em;
 }
 
-.brand-name span {
-    color: #45f58a;
+.brand-title span {
+    color: #49f58a;
 }
 
-.brand-sub {
-    margin-top: 2px;
+.brand-subtitle {
+    color: #789488;
 
-    color: #789084;
+    font-size: .70rem;
 
-    font-size: .69rem;
+    margin-top: 4px;
+
+    letter-spacing: .05em;
 }
 
 .nav-links {
-    color: #8ca398;
-    font-size: .9rem;
+    color: #8ba399;
+
+    font-size: .86rem;
+
+    word-spacing: 20px;
 }
 
-/* =========================
+
+/* ========================================================
    HERO
-========================= */
+======================================================== */
 
 .hero {
     position: relative;
+
     overflow: hidden;
 
-    margin-top: 1rem;
+    min-height: 510px;
 
-    padding: 5rem 3.7rem;
+    margin-top: 20px;
 
-    min-height: 470px;
+    padding: 75px 65px;
 
-    border-radius: 30px;
+    border-radius: 32px;
 
-    border:
-        1px solid rgba(74,255,142,.18);
+    border: 1px solid rgba(66, 255, 137, .20);
 
     background:
         radial-gradient(
-            circle at 79% 44%,
-            rgba(36,255,127,.18),
-            transparent 20%
+            circle at 78% 48%,
+            rgba(0, 255, 123, .14),
+            transparent 19%
         ),
         linear-gradient(
-            115deg,
-            rgba(3,15,10,.98),
-            rgba(2,9,7,.84)
+            120deg,
+            rgba(2, 20, 13, .98),
+            rgba(1, 10, 7, .95)
         );
 
     box-shadow:
-        0 25px 80px rgba(0,0,0,.40);
+        0 30px 100px rgba(0, 0, 0, .45);
 }
+
+
+/* círculo grande */
 
 .hero::before {
     content: "";
 
     position: absolute;
 
-    right: 7%;
-    top: 7%;
+    width: 430px;
+    height: 430px;
 
-    width: 420px;
-    height: 420px;
+    right: 6%;
+    top: 7%;
 
     border-radius: 50%;
 
-    border:
-        1px solid rgba(65,255,139,.30);
+    border: 1px solid rgba(66, 255, 137, .30);
 
     box-shadow:
-        0 0 70px rgba(50,255,140,.12);
+        0 0 80px rgba(30, 255, 130, .10);
 }
+
+
+/* círculo interno */
 
 .hero::after {
     content: "";
 
     position: absolute;
 
-    right: 13%;
-    top: 17%;
+    width: 290px;
+    height: 290px;
 
-    width: 285px;
-    height: 285px;
+    right: 11%;
+    top: 21%;
 
     border-radius: 50%;
 
-    border:
-        1px dashed rgba(70,255,140,.20);
+    border: 1px dashed rgba(66, 255, 137, .18);
 }
+
 
 .hero-content {
     position: relative;
+
     z-index: 2;
 
-    max-width: 720px;
+    max-width: 750px;
 }
 
 .eyebrow {
-    color: #48f58e;
+    color: #49f58a;
 
-    font-size: .77rem;
+    font-size: .76rem;
 
     font-weight: 800;
 
-    letter-spacing: .17em;
+    letter-spacing: .18em;
 
-    margin-bottom: 1.1rem;
+    margin-bottom: 20px;
 }
 
 .hero h1 {
-    margin: 0;
-
     color: white;
 
-    font-size: 4.3rem;
+    margin: 0;
 
-    line-height: 1.03;
+    font-size: clamp(3rem, 5vw, 5rem);
 
-    letter-spacing: -0.055em;
+    line-height: 1.02;
 
-    font-weight: 800;
+    letter-spacing: -.055em;
+
+    font-weight: 850;
 }
 
 .hero h1 span {
-    color: #55f58a;
+    color: #50f58c;
 
     text-shadow:
-        0 0 30px rgba(60,255,140,.22);
+        0 0 35px rgba(57, 255, 135, .20);
 }
 
-.hero p {
-    max-width: 650px;
+.hero-description {
+    max-width: 660px;
 
-    margin-top: 1.6rem;
+    margin-top: 26px;
 
-    color: #afc2b7;
+    color: #adc2b7;
 
-    font-size: 1.07rem;
+    font-size: 1.08rem;
 
-    line-height: 1.8;
+    line-height: 1.75;
 }
+
 
 .pills {
     display: flex;
 
     flex-wrap: wrap;
 
-    gap: .8rem;
+    gap: 12px;
 
-    margin-top: 2rem;
+    margin-top: 30px;
 }
 
 .pill {
-    padding: .72rem 1rem;
+    padding: 11px 17px;
 
     border-radius: 999px;
 
-    border:
-        1px solid rgba(69,255,140,.24);
+    color: #caffdb;
 
-    background:
-        rgba(12,49,31,.28);
+    font-size: .82rem;
 
-    color: #d0ffde;
+    border: 1px solid rgba(68, 255, 139, .25);
 
-    font-size: .84rem;
+    background: rgba(12, 54, 33, .30);
+
+    backdrop-filter: blur(8px);
 }
 
-/* =========================
-   SEÇÕES
-========================= */
 
-.section-kicker {
-    margin-top: 4rem;
+/* ========================================================
+   TÍTULOS
+======================================================== */
 
-    color: #45f58a;
+.section {
+    margin-top: 70px;
+}
 
-    font-size: .76rem;
+.section-label {
+    color: #49f58a;
+
+    font-size: .73rem;
 
     font-weight: 800;
 
-    letter-spacing: .15em;
+    letter-spacing: .17em;
+
+    margin-bottom: 8px;
 }
 
 .section-title {
-    margin-top: .35rem;
-
-    margin-bottom: 1.4rem;
-
     color: white;
 
-    font-size: 2.3rem;
+    font-size: 2.45rem;
 
     font-weight: 800;
+
+    letter-spacing: -.04em;
+
+    margin-bottom: 25px;
 }
 
-/* =========================
-   UPLOAD
-========================= */
 
-.upload-info {
-    min-height: 205px;
+/* ========================================================
+   ÁREA DE ANÁLISE
+======================================================== */
 
-    padding: 1.7rem;
+.analysis-info {
+    min-height: 230px;
 
-    border-radius: 22px;
+    padding: 30px;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(70, 255, 140, .17);
 
     background:
         linear-gradient(
             145deg,
-            rgba(10,38,26,.82),
-            rgba(4,18,12,.82)
+            rgba(9, 42, 27, .74),
+            rgba(3, 18, 12, .90)
         );
 
-    border:
-        1px solid rgba(75,255,143,.16);
-
     box-shadow:
-        0 20px 60px rgba(0,0,0,.25);
+        0 20px 60px rgba(0, 0, 0, .25);
 }
 
-.upload-icon {
-    width: 52px;
-    height: 52px;
-
+.analysis-icon {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
-    margin-bottom: 1rem;
+    width: 55px;
+    height: 55px;
 
-    border-radius: 15px;
+    margin-bottom: 18px;
 
-    background:
-        rgba(55,255,132,.09);
+    border-radius: 16px;
 
-    border:
-        1px solid rgba(70,255,140,.24);
+    font-size: 1.55rem;
 
-    font-size: 1.5rem;
+    border: 1px solid rgba(72, 255, 142, .25);
+
+    background: rgba(39, 255, 127, .08);
 }
 
-.upload-info h3 {
+.analysis-info h3 {
     color: white;
 
-    font-size: 1.5rem;
+    margin: 0 0 10px 0;
+
+    font-size: 1.45rem;
 }
 
-.upload-info p {
-    color: #9fb3a8;
+.analysis-info p {
+    color: #9db4a8;
 
-    line-height: 1.7;
+    line-height: 1.65;
+
+    margin: 0;
 }
+
+
+/* uploader do Streamlit */
 
 div[data-testid="stFileUploader"] {
-    min-height: 205px;
+    min-height: 230px;
 
     display: flex;
-
     align-items: center;
+
+    padding: 20px;
+
+    border-radius: 24px;
+
+    border: 1px dashed rgba(70, 255, 140, .35);
 
     background:
         linear-gradient(
             145deg,
-            rgba(6,25,17,.85),
-            rgba(3,15,10,.85)
+            rgba(7, 30, 20, .78),
+            rgba(3, 16, 11, .90)
         );
-
-    border:
-        1px dashed rgba(72,255,140,.38);
-
-    border-radius: 22px;
-
-    padding: 1.2rem;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.22);
 }
 
 div[data-testid="stFileUploader"] section {
@@ -389,325 +419,433 @@ div[data-testid="stFileUploader"] section {
 }
 
 div[data-testid="stFileUploader"] button {
-    background:
-        linear-gradient(
-            90deg,
-            #08763e,
-            #20d76e
-        ) !important;
-
-    color: white !important;
-
     border: none !important;
 
     border-radius: 12px !important;
+
+    background:
+        linear-gradient(
+            90deg,
+            #087940,
+            #21d970
+        ) !important;
+
+    color: white !important;
 }
 
-/* =========================
-   CARDS
-========================= */
+
+/* ========================================================
+   CARDS COM IMAGENS
+======================================================== */
 
 .future-card {
     position: relative;
 
     overflow: hidden;
 
-    min-height: 340px;
+    min-height: 390px;
 
-    padding: 1.7rem;
+    padding: 30px;
 
-    border-radius: 22px;
+    border-radius: 25px;
 
-    border:
-        1px solid rgba(70,255,140,.22);
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.30);
+    border: 1px solid rgba(70, 255, 140, .23);
 
     background-size: cover !important;
 
     background-position: center !important;
 
-    transition: .25s ease;
+    box-shadow:
+        0 25px 65px rgba(0, 0, 0, .35);
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .future-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-7px);
 
-    border-color:
-        rgba(70,255,140,.48);
+    border-color: rgba(70, 255, 140, .55);
 
     box-shadow:
-        0 28px 75px rgba(0,255,130,.10);
+        0 30px 80px rgba(0, 255, 128, .10);
 }
 
-.card-icon {
-    width: 52px;
-    height: 52px;
 
+/* brilho no topo dos cards */
+
+.future-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(75, 255, 145, .8),
+            transparent
+        );
+}
+
+
+.card-content {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.card-icon {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
-    margin-bottom: 1rem;
+    width: 55px;
+    height: 55px;
 
-    border-radius: 15px;
+    margin-bottom: 22px;
 
-    background:
-        rgba(5,20,13,.72);
+    border-radius: 16px;
 
-    border:
-        1px solid rgba(70,255,140,.30);
+    font-size: 1.55rem;
 
-    backdrop-filter: blur(8px);
+    background: rgba(1, 15, 9, .72);
 
-    font-size: 1.45rem;
+    border: 1px solid rgba(72, 255, 142, .28);
+
+    backdrop-filter: blur(10px);
 }
 
 .future-card h3 {
     color: white;
 
-    font-size: 1.32rem;
+    margin-bottom: 18px;
+
+    font-size: 1.45rem;
+
+    font-weight: 750;
 
     text-shadow:
-        0 3px 15px rgba(0,0,0,.85);
+        0 3px 15px rgba(0, 0, 0, .95);
 }
 
 .future-card p {
-    color: #ecfff4;
+    color: #f0fff5;
 
-    margin: .58rem 0;
+    margin: 10px 0;
+
+    line-height: 1.55;
 
     text-shadow:
-        0 2px 12px rgba(0,0,0,.95);
+        0 2px 12px rgba(0, 0, 0, 1);
 }
 
 .check {
-    color: #4df58d;
+    color: #4df58c;
 
-    font-weight: 800;
+    font-weight: 900;
+
+    margin-right: 5px;
 }
 
 .status {
-    display: inline-flex;
+    display: inline-block;
 
-    margin-top: 1rem;
+    margin-top: 18px;
 
-    padding: .45rem .75rem;
+    padding: 8px 12px;
 
     border-radius: 999px;
 
-    background:
-        rgba(10,20,13,.70);
+    color: #ffe080;
 
-    border:
-        1px solid rgba(255,193,7,.35);
+    font-size: .78rem;
 
-    color: #ffd96f;
+    background: rgba(4, 15, 9, .70);
 
-    font-size: .8rem;
+    border: 1px solid rgba(255, 205, 72, .32);
+
+    backdrop-filter: blur(8px);
 }
 
-/* =========================
+
+/* ========================================================
    MISSÃO
-========================= */
+======================================================== */
 
 .mission {
-    margin-top: 2.3rem;
+    margin-top: 45px;
 
-    padding: 1.6rem;
+    padding: 28px;
 
-    border-radius: 20px;
+    border-radius: 22px;
+
+    text-align: center;
+
+    color: #b7d9c5;
+
+    line-height: 1.7;
+
+    border: 1px solid rgba(70, 255, 140, .16);
 
     background:
         linear-gradient(
             90deg,
-            rgba(12,51,32,.35),
-            rgba(5,25,17,.25)
+            rgba(10, 50, 31, .35),
+            rgba(4, 22, 14, .25)
         );
-
-    border:
-        1px solid rgba(72,255,140,.16);
-
-    color: #bfe9ce;
-
-    text-align: center;
 }
 
 .mission strong {
-    color: #54f591;
+    color: #51f58d;
 }
 
-.footer-custom {
-    margin-top: 3rem;
 
-    padding-top: 1.5rem;
+/* ========================================================
+   FOOTER
+======================================================== */
 
-    border-top:
-        1px solid rgba(70,255,140,.08);
+.custom-footer {
+    margin-top: 55px;
 
-    color: #647c70;
+    padding-top: 25px;
+
+    border-top: 1px solid rgba(70, 255, 140, .09);
+
+    color: #657d71;
 
     text-align: center;
 
-    font-size: .82rem;
+    font-size: .80rem;
+}
+
+
+/* ========================================================
+   CELULAR
+======================================================== */
+
+@media (max-width: 800px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+    }
+
+    .hero {
+        padding: 50px 28px;
+
+        min-height: 500px;
+    }
+
+    .hero::before {
+        opacity: .35;
+
+        right: -180px;
+    }
+
+    .hero::after {
+        opacity: .30;
+
+        right: -100px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
 }
 
 </style>
-""")
+""", unsafe_allow_html=True)
 
 
 # =========================================================
-# NAVBAR COM LOGO
+# CABEÇALHO
 # =========================================================
 
-st.html(f"""
-<div class="navbar">
+st.markdown(
+    f"""
+    <div class="navbar">
 
-    <div class="brand-wrap">
+        <div class="brand">
 
-        <img
-            src="data:image/png;base64,{logo}"
-            class="logo-img"
-        >
+            <img
+                class="logo"
+                src="data:image/png;base64,{logo}"
+            >
 
-        <div>
+            <div>
 
-            <div class="brand-name">
-                Vig<span>IA</span> Goiás
-            </div>
+                <div class="brand-title">
+                    Vig<span>IA</span> Goiás
+                </div>
 
-            <div class="brand-sub">
-                Inteligência Artificial • Vigilância Ambiental
+                <div class="brand-subtitle">
+                    TECNOLOGIA E INTELIGÊNCIA A SERVIÇO DA COMUNIDADE
+                </div>
+
             </div>
 
         </div>
 
-    </div>
+        <div class="nav-links">
+            INÍCIO PROJETO TECNOLOGIA
+        </div>
 
-    <div class="nav-links">
-        Início &nbsp;&nbsp;&nbsp;
-        Projeto &nbsp;&nbsp;&nbsp;
-        Tecnologia
     </div>
-
-</div>
-""")
+    """,
+    unsafe_allow_html=True
+)
 
 
 # =========================================================
 # HERO
 # =========================================================
 
-st.html("""
-<div class="hero">
+st.markdown(
+    """
+    <div class="hero">
 
-    <div class="hero-content">
+        <div class="hero-content">
 
-        <div class="eyebrow">
-            VISÃO COMPUTACIONAL • VIGILÂNCIA AMBIENTAL
-        </div>
-
-        <h1>
-            Tecnologia para um<br>
-            <span>ambiente mais seguro.</span>
-        </h1>
-
-        <p>
-            O VigIA Goiás utiliza Inteligência Artificial para reconhecer
-            elementos presentes no ambiente e apoiar a identificação de
-            condições relevantes à vigilância em saúde.
-        </p>
-
-        <div class="pills">
-
-            <div class="pill">
-                ✦ Inteligência Artificial
+            <div class="eyebrow">
+                VISÃO COMPUTACIONAL • VIGILÂNCIA AMBIENTAL
             </div>
 
-            <div class="pill">
-                ◉ Dados ambientais
+            <h1>
+                Tecnologia para um
+                <br>
+                <span>ambiente mais seguro.</span>
+            </h1>
+
+            <div class="hero-description">
+
+                O VigIA Goiás utiliza Inteligência Artificial para
+                reconhecer elementos presentes no ambiente e apoiar
+                a identificação de condições relevantes à vigilância
+                ambiental e em saúde.
+
             </div>
 
-            <div class="pill">
-                ⌁ Visão computacional
+            <div class="pills">
+
+                <div class="pill">
+                    ✦ Inteligência Artificial
+                </div>
+
+                <div class="pill">
+                    ◉ Dados ambientais
+                </div>
+
+                <div class="pill">
+                    ⌁ Visão computacional
+                </div>
+
             </div>
 
         </div>
 
     </div>
-
-</div>
-""")
+    """,
+    unsafe_allow_html=True
+)
 
 
 # =========================================================
-# UPLOAD
+# ANÁLISE
 # =========================================================
 
-st.html("""
-<div class="section-kicker">
-    ANÁLISE INTELIGENTE
-</div>
+st.markdown(
+    """
+    <div class="section">
 
-<div class="section-title">
-    Analise uma imagem do ambiente
-</div>
-""")
+        <div class="section-label">
+            ANÁLISE INTELIGENTE
+        </div>
 
-col1, col2 = st.columns(
+        <div class="section-title">
+            Analise uma imagem do ambiente
+        </div>
+
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+col_info, col_upload = st.columns(
     [0.8, 1.2],
     gap="large"
 )
 
-with col1:
 
-    st.html("""
-    <div class="upload-info">
+with col_info:
 
-        <div class="upload-icon">
-            📷
+    st.markdown(
+        """
+        <div class="analysis-info">
+
+            <div class="analysis-icon">
+                📷
+            </div>
+
+            <h3>
+                Analisar ambiente
+            </h3>
+
+            <p>
+                Envie uma fotografia para que o VigIA possa
+                identificar elementos e condições ambientais
+                relevantes.
+            </p>
+
         </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-        <h3>
-            Analisar ambiente
-        </h3>
 
-        <p>
-            Envie uma fotografia do ambiente para que o VigIA
-            possa identificar elementos relevantes para a
-            vigilância ambiental.
-        </p>
+with col_upload:
 
-    </div>
-    """)
-
-with col2:
-
-    imagem = st.file_uploader(
-        "Selecione uma imagem",
+    imagem_enviada = st.file_uploader(
+        "Enviar imagem",
         type=["jpg", "jpeg", "png"],
         label_visibility="collapsed"
     )
 
 
-if imagem is not None:
+if imagem_enviada is not None:
 
     st.image(
-        imagem,
+        imagem_enviada,
         caption="Imagem enviada para análise",
         use_container_width=True
     )
 
-    if st.button(
+    analisar = st.button(
         "✦ Iniciar análise com o VigIA",
         use_container_width=True
-    ):
+    )
+
+    if analisar:
 
         st.info(
-            "Os modelos serão conectados à interface "
+            "A interface está pronta. "
+            "O modelo de Inteligência Artificial será conectado "
             "após a conclusão do treinamento."
         )
 
@@ -716,180 +854,225 @@ if imagem is not None:
 # MÓDULOS
 # =========================================================
 
-st.html("""
-<div class="section-kicker">
-    MÓDULOS DO SISTEMA
-</div>
+st.markdown(
+    """
+    <div class="section">
 
-<div class="section-title">
-    O que o VigIA identifica?
-</div>
-""")
+        <div class="section-label">
+            MÓDULOS DO SISTEMA
+        </div>
 
-c1, c2, c3 = st.columns(
+        <div class="section-title">
+            O que o VigIA identifica?
+        </div>
+
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+card1, card2, card3 = st.columns(
     3,
     gap="large"
 )
 
 
+# =========================================================
 # CARD 1
-with c1:
+# =========================================================
 
-    st.html(f"""
-    <div
-        class="future-card"
-        style="
-            background-image:
-            linear-gradient(
-                180deg,
-                rgba(1,12,8,.32),
-                rgba(1,12,8,.93)
-            ),
-            url('data:image/jpeg;base64,{cidade}');
-        "
-    >
+with card1:
 
-        <div class="card-icon">
-            ♻️
+    st.markdown(
+        f"""
+        <div
+            class="future-card"
+            style="
+                background-image:
+                    linear-gradient(
+                        180deg,
+                        rgba(0, 8, 5, .15) 0%,
+                        rgba(0, 10, 6, .55) 45%,
+                        rgba(0, 8, 5, .96) 100%
+                    ),
+                    url('data:image/jpeg;base64,{foto_cidade}');
+            "
+        >
+
+            <div class="card-content">
+
+                <div class="card-icon">
+                    ♻️
+                </div>
+
+                <h3>
+                    Recipientes e resíduos
+                </h3>
+
+                <p>
+                    <span class="check">✓</span>
+                    Pneus
+                </p>
+
+                <p>
+                    <span class="check">✓</span>
+                    Baldes
+                </p>
+
+                <p>
+                    <span class="check">✓</span>
+                    Garrafas plásticas
+                </p>
+
+                <p>
+                    <span class="check">✓</span>
+                    Latas
+                </p>
+
+            </div>
+
         </div>
-
-        <h3>
-            Recipientes e resíduos
-        </h3>
-
-        <p>
-            <span class="check">✓</span>
-            Pneus
-        </p>
-
-        <p>
-            <span class="check">✓</span>
-            Baldes
-        </p>
-
-        <p>
-            <span class="check">✓</span>
-            Garrafas plásticas
-        </p>
-
-        <p>
-            <span class="check">✓</span>
-            Latas
-        </p>
-
-    </div>
-    """)
+        """,
+        unsafe_allow_html=True
+    )
 
 
+# =========================================================
 # CARD 2
-with c2:
+# =========================================================
 
-    st.html(f"""
-    <div
-        class="future-card"
-        style="
-            background-image:
-            linear-gradient(
-                180deg,
-                rgba(1,12,8,.22),
-                rgba(1,12,8,.92)
-            ),
-            url('data:image/jpeg;base64,{natureza}');
-        "
-    >
+with card2:
 
-        <div class="card-icon">
-            🌱
+    st.markdown(
+        f"""
+        <div
+            class="future-card"
+            style="
+                background-image:
+                    linear-gradient(
+                        180deg,
+                        rgba(0, 8, 5, .12) 0%,
+                        rgba(0, 10, 6, .48) 45%,
+                        rgba(0, 8, 5, .96) 100%
+                    ),
+                    url('data:image/jpeg;base64,{foto_natureza}');
+            "
+        >
+
+            <div class="card-content">
+
+                <div class="card-icon">
+                    🌱
+                </div>
+
+                <h3>
+                    Condições ambientais
+                </h3>
+
+                <p>
+                    <span class="check">✓</span>
+                    Vegetação
+                </p>
+
+                <p>
+                    <span class="check">✓</span>
+                    Água parada
+                </p>
+
+                <p>
+                    <span class="check">✓</span>
+                    Matéria orgânica
+                </p>
+
+            </div>
+
         </div>
-
-        <h3>
-            Condições ambientais
-        </h3>
-
-        <p>
-            <span class="check">✓</span>
-            Vegetação
-        </p>
-
-        <p>
-            <span class="check">✓</span>
-            Água parada
-        </p>
-
-        <p>
-            <span class="check">✓</span>
-            Matéria orgânica
-        </p>
-
-    </div>
-    """)
+        """,
+        unsafe_allow_html=True
+    )
 
 
+# =========================================================
 # CARD 3
-with c3:
+# =========================================================
 
-    st.html(f"""
-    <div
-        class="future-card"
-        style="
-            background-image:
-            linear-gradient(
-                180deg,
-                rgba(1,12,8,.25),
-                rgba(1,12,8,.93)
-            ),
-            url('data:image/jpeg;base64,{cidade}');
-        "
-    >
+with card3:
 
-        <div class="card-icon">
-            🏙️
+    st.markdown(
+        f"""
+        <div
+            class="future-card"
+            style="
+                background-image:
+                    linear-gradient(
+                        180deg,
+                        rgba(0, 8, 5, .14) 0%,
+                        rgba(0, 10, 6, .55) 45%,
+                        rgba(0, 8, 5, .97) 100%
+                    ),
+                    url('data:image/jpeg;base64,{foto_cidade}');
+            "
+        >
+
+            <div class="card-content">
+
+                <div class="card-icon">
+                    🏙️
+                </div>
+
+                <h3>
+                    Estrutura urbana
+                </h3>
+
+                <p>
+                    Futuro módulo de análise de infraestrutura,
+                    saneamento e condições urbanas relacionadas
+                    ao ambiente.
+                </p>
+
+                <div class="status">
+                    ● EM DESENVOLVIMENTO
+                </div>
+
+            </div>
+
         </div>
-
-        <h3>
-            Estrutura urbana
-        </h3>
-
-        <p>
-            Futuro módulo de análise de infraestrutura,
-            saneamento e condições urbanas relacionadas
-            ao ambiente.
-        </p>
-
-        <div class="status">
-            ● Em desenvolvimento
-        </div>
-
-    </div>
-    """)
+        """,
+        unsafe_allow_html=True
+    )
 
 
 # =========================================================
 # MISSÃO
 # =========================================================
 
-st.html("""
-<div class="mission">
+st.markdown(
+    """
+    <div class="mission">
 
-    <strong>VigIA Goiás</strong>
+        <strong>VigIA Goiás</strong>
+        — tecnologia, Inteligência Artificial e dados ambientais
+        para apoiar ambientes mais seguros, saudáveis e monitorados.
 
-    — tecnologia, Inteligência Artificial e dados ambientais
-    para apoiar ambientes mais seguros,
-    saudáveis e monitorados.
-
-</div>
-""")
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 
 # =========================================================
-# FOOTER
+# RODAPÉ
 # =========================================================
 
-st.html("""
-<div class="footer-custom">
+st.markdown(
+    """
+    <div class="custom-footer">
 
-    VigIA Goiás •
-    Inteligência Artificial aplicada à vigilância ambiental
+        VigIA Goiás •
+        Inteligência Artificial aplicada à vigilância ambiental
 
-</div>
-""")
+    </div>
+    """,
+    unsafe_allow_html=True
+)
